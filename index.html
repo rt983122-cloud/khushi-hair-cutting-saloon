@@ -284,6 +284,48 @@ document.getElementById("forgotBtn").addEventListener("click", async () => {
 });
 
 console.log("Firebase Authentication initialized");
+const emailInput = document.getElementById("authEmail");
+const passwordInput = document.getElementById("authPassword");
+const message = document.getElementById("authMessage");
+
+document.getElementById("registerBtn").addEventListener("click", async () => {
+  try {
+    message.textContent = "Registering...";
+    await window.registerWithEmail(
+      emailInput.value.trim(),
+      passwordInput.value
+    );
+    message.textContent = "Registration successful!";
+    document.getElementById("authScreen").style.display = "none";
+    document.getElementById("startScreen").style.display = "grid";
+  } catch (error) {
+    message.textContent = error.message;
+  }
+});
+
+document.getElementById("loginBtn").addEventListener("click", async () => {
+  try {
+    message.textContent = "Logging in...";
+    await window.loginWithEmail(
+      emailInput.value.trim(),
+      passwordInput.value
+    );
+    message.textContent = "Login successful!";
+    document.getElementById("authScreen").style.display = "none";
+    document.getElementById("startScreen").style.display = "grid";
+  } catch (error) {
+    message.textContent = error.message;
+  }
+});
+
+document.getElementById("forgotBtn").addEventListener("click", async () => {
+  try {
+    await window.resetPassword(emailInput.value.trim());
+    message.textContent = "Password reset email sent!";
+  } catch (error) {
+    message.textContent = error.message;
+  }
+});
 </script>
 </body>
 
